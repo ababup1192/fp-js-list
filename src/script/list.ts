@@ -1,3 +1,5 @@
+import * as Immutable from "immutable";
+
 interface Pattern<T, R> {
     empty: () => R;
     cons: (head: T, tail: List<T>) => R;
@@ -5,11 +7,16 @@ interface Pattern<T, R> {
 
 interface List<T> {
     get<R>(pattern: Pattern<T, R>): R;
+    toImList(): Immutable.List<T>;
 };
 
 export class Empty<T> implements List<T> {
     get<R>(pattern: Pattern<T, R>) {
         return pattern.empty();
+    }
+
+    toImList(): Immutable.List<T> {
+        return Immutable.List<T>();
     }
 }
 
@@ -24,6 +31,10 @@ export class Cons<T> implements List<T> {
 
     get<R>(pattern: Pattern<T, R>) {
         return pattern.cons(this.value, this.list);
+    }
+
+    toImList(): Immutable.List<T> {
+        return Immutable.fromJS(toArray(this));
     }
 }
 
@@ -74,3 +85,13 @@ export const append = <T>(xs: List<T>, ys: List<T>): List<T> =>
         empty: () => ys,
         cons: (head: T, tail: List<T>) => new Cons(head, append(tail, ys))
     });
+
+export const reverse = <T>(list: List<T>): List<T> => {
+    const reverseHelper = (list, acc) =>
+        match(list, {
+            empty: () => acc,
+            cons: (head: T, tail: List<T>) => reverseHelper(tail, new Cons(head, acc))
+        });
+    return reverseHelper(list, new Empty());
+}
+
