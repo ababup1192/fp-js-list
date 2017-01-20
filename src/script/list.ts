@@ -65,6 +65,12 @@ export const map = <T, U>(alist: List<T>, f: (T) => U): List<U> =>
         cons: (head: T, tail: List<T>) => new Cons<U>(f(head), map<T, U>(tail, f))
     });
 
+export const filter = <T>(alist: List<T>, p: (T) => boolean): List<T> =>
+    match(alist, {
+        empty: () => new Empty<T>(),
+        cons: (head: T, tail: List<T>) => p(head) ? new Cons(head, filter<T>(tail, p)) : filter(tail, p)
+    });
+
 export const toArray = <T>(alist: List<T>): Array<T> => {
     const toArrayHelper = (alist: List<T>, acc: Array<T>) =>
         match(alist, {

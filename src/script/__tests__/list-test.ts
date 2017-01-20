@@ -1,6 +1,6 @@
 import * as Immutable from "immutable";
 import { List, Range, Map } from "immutable";
-import { Cons, Empty, head, tail, toArray, map, length, append, reverse } from "../list";
+import { Cons, Empty, head, tail, toArray, map, length, append, reverse, filter } from "../list";
 
 describe("list", () => {
   it("should return first element", () => {
@@ -51,6 +51,13 @@ describe("list", () => {
     const actual = reverse(list).toImList();
     expect(actual.equals(List.of(3, 2, 1))).toBeTruthy();
   });
+
+  it("should return filtered list", () => {
+    const list = new Cons(1, new Cons(2, new Cons(3, new Cons(4, new Cons(5, new Cons(6, new Empty()))))));
+    const actual = filter(list, (x) => x % 2 === 0).toImList();
+    expect(actual.equals(List.of(2, 4, 6))).toBeTruthy();
+  });
+
 
 
 
