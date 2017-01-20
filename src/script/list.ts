@@ -38,7 +38,7 @@ export class Cons<T> implements List<T> {
     }
 }
 
-export const match = <T, R>(data: List<T>, pattern: Pattern<T, R>) =>
+const match = <T, R>(data: List<T>, pattern: Pattern<T, R>) =>
     data.get(pattern);
 
 export const isEmpty = <T, R>(alist) =>
