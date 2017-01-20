@@ -61,8 +61,8 @@ export const tail = <T>(alist: List<T>) =>
 
 export const map = <T, U>(alist: List<T>, f: (T) => U): List<U> =>
     match(alist, {
-        empty: () => new Empty(),
-        cons: (head: T, tail: List<T>) => new Cons(f(head), map<T, U>(tail, f))
+        empty: () => new Empty<U>(),
+        cons: (head: T, tail: List<T>) => new Cons<U>(f(head), map<T, U>(tail, f))
     });
 
 export const toArray = <T>(alist: List<T>): Array<T> => {
