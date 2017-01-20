@@ -1,6 +1,6 @@
 # Function JavaScript List
 
-[![CircleCI](https://circleci.com/gh/ababup1192/typescript-template.svg?style=svg)](https://circleci.com/gh/ababup1192/typescript-template)
+[![CircleCI](https://circleci.com/gh/ababup1192/fp-js-list.svg?style=svg)](https://circleci.com/gh/ababup1192/fp-js-list)
 
 # Preparation
 
