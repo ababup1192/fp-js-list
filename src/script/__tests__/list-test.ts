@@ -1,6 +1,6 @@
 import * as Immutable from "immutable";
 import { List, Range, Map } from "immutable";
-import { Cons, Empty, head, tail, toArray, map } from "../list";
+import { Cons, Empty, head, tail, toArray, map, length } from "../list";
 
 describe("list", () => {
   it("should return first element", () => {
@@ -33,6 +33,10 @@ describe("list", () => {
     expect(actual.equals(List.of(2, 4, 6))).toBeTruthy();
   });
 
-
+  it("should return length of list", () => {
+    const list = new Cons(1, new Cons(2, new Cons(3, new Empty())));
+    const actual = length(list);
+    expect(actual).toBe(3);
+  });
 
 });

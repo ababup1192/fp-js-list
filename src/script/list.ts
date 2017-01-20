@@ -62,3 +62,10 @@ export const toArray = <T>(alist: List<T>): Array<T> => {
         });
     return toArrayHelper(alist, []);
 };
+
+export const length = <T>(alist: List<T>): number => {
+    return match(alist, {
+        empty: () => 0,
+        cons: (head: T, tail: List<T>) => 1 + length(tail)
+    });
+}
