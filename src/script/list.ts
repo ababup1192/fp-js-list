@@ -5,7 +5,7 @@ interface Pattern<T, R> {
     cons: (head: T, tail: List<T>) => R;
 }
 
-interface List<T> {
+export interface List<T> {
     get<R>(pattern: Pattern<T, R>): R;
     toImList(): Immutable.List<T>;
 };
