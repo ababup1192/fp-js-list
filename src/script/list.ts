@@ -48,13 +48,13 @@ export const isEmpty = <T, R>(alist) =>
         cons: (head, tail) => false
     });
 
-export const head = <T>(alist: List<T>) =>
+export const head = <T>(alist: List<T>): T =>
     match(alist, {
         empty: () => null,
         cons: (head: T, tail: List<T>) => head
     });
 
-export const tail = <T>(alist: List<T>) =>
+export const tail = <T>(alist: List<T>): List<T> =>
     match(alist, {
         empty: () => null,
         cons: (head: T, tail: List<T>) => tail
@@ -100,12 +100,15 @@ export const append = <T>(xs: List<T>, ys: List<T>): List<T> =>
     });
 
 export const reverse = <T>(list: List<T>): List<T> => {
-    const reverseHelper = (list, acc) =>
+    const reverseHelper = (list: List<T>, acc: List<T>): List<T> =>
         match(list, {
             empty: () => acc,
-            cons: (head: T, tail: List<T>) => reverseHelper(tail, new Cons(head, acc))
+            cons: (head: T, tail: List<T>) => reverseHelper(tail, new Cons<T>(head, acc))
         });
-    return reverseHelper(list, new Empty());
+    return reverseHelper(list, new Empty<T>());
 };
 
-export const last = <T>(alist: List<T>): number => compose(head, reverse)(alist);
+export const last = <T>(alist: List<T>): T => compose<List<T>, List<T>, T>(head, reverse)(alist);
+
+export const init = <T>(alist: List<T>): List<T> =>
+    compose<List<T>, List<T>, List<T>>(compose<List<T>, List<T>, List<T>>(reverse, tail), reverse)(alist);
