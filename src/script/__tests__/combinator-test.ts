@@ -1,4 +1,4 @@
-import { even, odd } from "../combinator";
+import { even, odd, compose } from "../combinator";
 
 describe("combinator", () => {
   it("should return true if even function take even number", () => {
@@ -20,5 +20,13 @@ describe("combinator", () => {
     const actual = odd(4);
     expect(actual).toBeFalsy();
   });
+
+  it("should be able to compose", () => {
+    const f = (x: number) => x * x + 1;
+    const g = (x: number) => x - 2;
+
+    expect(compose(f, g)(2)).toBe(f(g(2)));
+  });
+
 
 });
