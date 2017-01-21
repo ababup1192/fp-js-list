@@ -85,52 +85,6 @@ export const take = <T>(stream: Stream<T>, n: number): Stream<T> =>
 
     });
 
-/*
-export const toArray = <T>(stream: Stream<T>): Array<T> => {
-    const toArrayHelper = (stream: Stream<T>, acc: Array<T>) =>
-        match(stream, {
-            empty: () => acc,
-            cons: (head: T, tail: Stream<T>) => toArrayHelper(tail, acc.concat(head))
-        });
-    return toArrayHelper(stream, []);
-};
-*/
-
-/*
-export const map = <T, U>(alist: List<T>, f: (T) => U): List<U> =>
-    match(alist, {
-        empty: () => new Empty<U>(),
-        cons: (head: T, tail: List<T>) => new Cons<U>(f(head), map<T, U>(tail, f))
-    });
-
-export const filter = <T>(alist: List<T>, p: (T) => boolean): List<T> =>
-    match(alist, {
-        empty: () => new Empty<T>(),
-        cons: (head: T, tail: List<T>) => p(head) ? new Cons(head, filter<T>(tail, p)) : filter(tail, p)
-    });
-
-export const length = <T>(alist: List<T>): number =>
-    match(alist, {
-        empty: () => 0,
-        cons: (head: T, tail: List<T>) => 1 + length(tail)
-    });
-
-export const append = <T>(xs: List<T>, ys: List<T>): List<T> =>
-    match(xs, {
-        empty: () => ys,
-        cons: (head: T, tail: List<T>) => new Cons(head, append(tail, ys))
-    });
-
-export const reverse = <T>(list: List<T>): List<T> => {
-    const reverseHelper = (list, acc) =>
-        match(list, {
-            empty: () => acc,
-            cons: (head: T, tail: List<T>) => reverseHelper(tail, new Cons(head, acc))
-        });
-    return reverseHelper(list, new Empty());
-}
-*/
-
 export const ones: Stream<number> = new Cons(1, () => ones);
 
 export const enumFrom: (n: number) => Stream<number> = (n: number) => new Cons(n, () => enumFrom(n + 1));
