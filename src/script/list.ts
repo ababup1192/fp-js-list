@@ -81,11 +81,17 @@ export const toArray = <T>(alist: List<T>): Array<T> => {
     return toArrayHelper(alist, []);
 };
 
+export const sum = (alist: List<number>): number => {
+    const sumHelper = (alist: List<number>, acc: number) =>
+        match(alist, {
+            empty: () => acc,
+            cons: (head: number, tail: List<number>) => head + sumHelper(tail, acc)
+        });
+    return sumHelper(alist, 0);
+};
+
 export const length = <T>(alist: List<T>): number =>
-    match(alist, {
-        empty: () => 0,
-        cons: (head: T, tail: List<T>) => 1 + length(tail)
-    });
+    sum(map(alist, (n) => 1));
 
 export const append = <T>(xs: List<T>, ys: List<T>): List<T> =>
     match(xs, {
