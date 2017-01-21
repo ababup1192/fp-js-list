@@ -13,3 +13,5 @@ export const odd = not(even);
 export const compose = <A, B, C>(f: (B) => C, g: (A) => B) =>
     (arg: A) =>
         f(g(arg));
+
+export const opposite = (n: number) => - n;
