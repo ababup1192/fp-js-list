@@ -1,4 +1,5 @@
 import * as Immutable from "immutable";
+import { compose } from "./combinator";
 
 interface Pattern<T, R> {
     empty: () => R;
@@ -99,5 +100,6 @@ export const reverse = <T>(list: List<T>): List<T> => {
             cons: (head: T, tail: List<T>) => reverseHelper(tail, new Cons(head, acc))
         });
     return reverseHelper(list, new Empty());
-}
+};
 
+export const last = <T>(alist: List<T>): number => compose(head, reverse)(alist);
