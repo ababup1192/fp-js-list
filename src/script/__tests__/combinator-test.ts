@@ -33,4 +33,10 @@ describe("combinator", () => {
     expect(compose(opposite, opposite)(2)).toBe(2);
   });
 
+  it("should return added and opsited number", () => {
+    const add = (x: number) => (y: number) => x + y;
+
+    expect(compose(opposite, add(2))(3)).toBe(-5);
+  });
+
 });
