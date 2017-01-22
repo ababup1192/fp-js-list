@@ -40,12 +40,12 @@ describe("combinator", () => {
   });
 
   it("should return factrial number", () => {
-    const factrail = Y((fact: (n: number) => number) =>
-      (n: number) =>
+    const factrial: (fact: number) => number = Y((fact) =>
+      (n) =>
         n === 0 ? 1 : n * fact(n - 1)
     );
 
-    expect(factrail(3)).toBe(6);
+    expect(factrial(3)).toBe(6);
   });
 
 });
