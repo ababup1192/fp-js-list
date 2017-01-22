@@ -1,4 +1,4 @@
-import { even, odd, compose, opposite } from "../combinator";
+import { even, odd, compose, opposite, Y } from "../combinator";
 
 describe("combinator", () => {
   it("should return true if even function take even number", () => {
@@ -37,6 +37,15 @@ describe("combinator", () => {
     const add = (x: number) => (y: number) => x + y;
 
     expect(compose(opposite, add(2))(3)).toBe(-5);
+  });
+
+  it("should return factrial number", () => {
+    const factrail = Y((fact: (n: number) => number) =>
+      (n: number) =>
+        n === 0 ? 1 : n * fact(n - 1)
+    );
+
+    expect(factrail(3)).toBe(6);
   });
 
 });

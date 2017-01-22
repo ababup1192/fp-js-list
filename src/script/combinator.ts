@@ -15,3 +15,13 @@ export const compose = <A, B, C>(f: (B) => C, g: (A) => B): (A) => C =>
         f(g(arg));
 
 export const opposite = (n: number) => - n;
+
+export const Y = <A>(F: (A) => (A) =>  A) =>
+    ((x) =>
+        F((y) =>
+            x(x)(y)
+        )
+    )((x) =>
+        F((y) =>
+            x(x)(y)
+        ));
