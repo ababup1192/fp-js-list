@@ -1,5 +1,6 @@
 import * as Immutable from "immutable";
 import * as List from "./list";
+import { not, multipleOf } from "./combinator";
 
 interface Pattern<T, R> {
     empty: () => R;
@@ -85,8 +86,29 @@ export const take = <T>(stream: Stream<T>, n: number): Stream<T> =>
 
     });
 
+export const filter = <T>(p: (T) => boolean) =>
+    (aStream: Stream<T>) =>
+        match(aStream, {
+            empty: () => new Empty<T>(),
+            cons: (head: T, tailThunk: () => Stream<T>) =>
+                p(head) ?
+                    new Cons<T>(head, () => filter(p)(tailThunk())) :
+                    filter(p)(tailThunk())
+        });
+
+export const remove = <T>(p: (T) => boolean) =>
+    (aStream: Stream<T>) =>
+        filter(not(p))(aStream);
+
 export const ones: Stream<number> = new Cons(1, () => ones);
 
 export const enumFrom: (n: number) => Stream<number> = (n: number) => new Cons(n, () => enumFrom(n + 1));
 
-
+export const sieve = (aStream: Stream<number>): Stream<number> =>
+    match(aStream, {
+        empty: () => null,
+        cons: (head: number, tailThunk: () => Stream<number>) =>
+            new Cons(head, () =>
+                sieve(
+                    remove((item: number) => multipleOf(head)(item))(tailThunk())))
+    });

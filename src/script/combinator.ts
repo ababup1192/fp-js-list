@@ -1,9 +1,8 @@
-const multipleOf = (n: number) =>
+export const multipleOf = (n: number) =>
     (m: number) =>
         m % n === 0;
 
-
-const not = (predicate: (n: number) => boolean) =>
+export const not = (predicate: (arg: number) => boolean) =>
     (arg: number) =>
         !predicate(arg);
 
