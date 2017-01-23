@@ -110,3 +110,10 @@ export const foldr = <T, U>(alist: List<T>) =>
                 empty: () => acc,
                 cons: (head: T, tail: List<T>) => f(head)(foldr(tail)(acc)(f))
             });
+
+export const find = <T>(alist: List<T>) =>
+    (p: (T) => boolean) =>
+        foldr<T, T>(alist)(null)((x: T) =>
+            (acc: T) =>
+                p(x) ? x : acc
+        );

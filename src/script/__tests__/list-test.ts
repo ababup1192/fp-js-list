@@ -1,5 +1,6 @@
 import * as Immutable from "immutable";
-import { List, Cons, Empty, head, tail, toArray, map, length, append, reverse, filter, last, sum } from "../list";
+import { List, Cons, Empty, head, tail, toArray, map, length,
+   append, reverse, filter, last, sum, find } from "../list";
 
 describe("list", () => {
   it("should return first element", () => {
@@ -75,5 +76,10 @@ describe("list", () => {
     expect(actual).toBe(6);
   });
 
+  it("should return founded element", () => {
+    const list: List<number> = new Cons(1, new Cons(2, new Cons(3, new Empty<number>())));
+    const actual = find<number>(list)((x: number) => x % 2 === 0);
+    expect(actual).toBe(2);
+  });
 
 });
