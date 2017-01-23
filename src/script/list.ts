@@ -94,14 +94,9 @@ export const append = <T>(xs: List<T>, ys: List<T>): List<T> =>
         cons: (head: T, tail: List<T>) => new Cons(head, append(tail, ys))
     });
 
-export const reverse = <T>(list: List<T>): List<T> => {
-    const reverseHelper = (list: List<T>, acc: List<T>): List<T> =>
-        match(list, {
-            empty: () => acc,
-            cons: (head: T, tail: List<T>) => reverseHelper(tail, new Cons<T>(head, acc))
-        });
-    return reverseHelper(list, new Empty<T>());
-};
+export const reverse = <T>(list: List<T>) =>
+    foldr<T, List<T>>(list)(new Empty<T>())((x: T) => (acc: List<T>) =>
+        append<T>(acc, new Cons(x, new Empty<T>())));
 
 export const last = <T>(alist: List<T>): T => compose<List<T>, List<T>, T>(head, reverse)(alist);
 
