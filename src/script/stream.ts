@@ -112,3 +112,4 @@ export const sieve = (aStream: Stream<number>): Stream<number> =>
                 sieve(
                     remove((item: number) => multipleOf(head)(item))(tailThunk())))
     });
+

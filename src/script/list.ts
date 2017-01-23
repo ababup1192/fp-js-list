@@ -81,14 +81,9 @@ export const toArray = <T>(alist: List<T>): Array<T> => {
     return toArrayHelper(alist, []);
 };
 
-export const sum = (alist: List<number>): number => {
-    const sumHelper = (alist: List<number>, acc: number) =>
-        match(alist, {
-            empty: () => acc,
-            cons: (head: number, tail: List<number>) => head + sumHelper(tail, acc)
-        });
-    return sumHelper(alist, 0);
-};
+export const sum = (alist: List<number>): number =>
+    foldr<number, number>(alist)(0)((x: number) => (acc: number) =>
+        acc + x);
 
 export const length = <T>(alist: List<T>): number =>
     sum(map(alist, (n) => 1));
@@ -112,3 +107,11 @@ export const last = <T>(alist: List<T>): T => compose<List<T>, List<T>, T>(head,
 
 export const init = <T>(alist: List<T>): List<T> =>
     compose<List<T>, List<T>, List<T>>(compose<List<T>, List<T>, List<T>>(reverse, tail), reverse)(alist);
+
+export const foldr = <T, U>(alist: List<T>) =>
+    (acc: U) =>
+        (f: (T) => (U) => U): U =>
+            match(alist, {
+                empty: () => acc,
+                cons: (head: T, tail: List<T>) => f(head)(foldr(tail)(acc)(f))
+            });
