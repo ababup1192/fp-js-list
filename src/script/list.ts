@@ -86,7 +86,7 @@ export const sum = (alist: List<number>): number =>
         acc + x);
 
 export const length = <T>(alist: List<T>): number =>
-    sum(map(alist, (n) => 1));
+    foldr<T, number>(alist)(0)((_) => (acc: number) => acc + 1);
 
 export const append = <T>(xs: List<T>, ys: List<T>): List<T> =>
     match(xs, {
