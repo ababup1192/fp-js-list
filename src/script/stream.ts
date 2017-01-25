@@ -7,7 +7,7 @@ interface Pattern<T, R> {
     cons: (head: T, tailThunk: () => Stream<T>) => R;
 }
 
-interface Stream<T> {
+export interface Stream<T> {
     get<R>(pattern: Pattern<T, R>): R;
     toList(): List.List<T>;
     toImList(): Immutable.List<T>;
@@ -95,6 +95,17 @@ export const filter = <T>(p: (T) => boolean) =>
                     new Cons<T>(head, () => filter(p)(tailThunk())) :
                     filter(p)(tailThunk())
         });
+
+export type FindSuccess = <T>(T) => T;
+export type FindFailure = <T>(aStream: Stream<T>, p: (T) => boolean, FindFailure, FindSuccess) => T;
+export const find = <T>(aStream: Stream<T>,
+    p: (T) => boolean, continuesOnFailure: FindFailure, continuesOnSuccess: FindSuccess) =>
+    match(aStream, {
+        empty: () => continuesOnSuccess(null),
+        cons: (head, tailThunk: () => Stream<T>) =>
+            p(head) ? continuesOnSuccess(head) :
+                continuesOnFailure(tailThunk(), p, continuesOnFailure, continuesOnSuccess)
+    });
 
 export const remove = <T>(p: (T) => boolean) =>
     (aStream: Stream<T>) =>
